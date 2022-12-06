@@ -181,6 +181,9 @@ void APP_Tasks ( void )
             DRV_TMR1_Start();
             DRV_TMR2_Start();
             DRV_TMR3_Start();
+            // Start Output Compare
+            DRV_OC0_Start();
+            DRV_OC1_Start();
             
             // Turn ON all LEDs
             APP_LEDsState(OFF);
