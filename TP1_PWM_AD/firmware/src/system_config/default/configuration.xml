@@ -258,6 +258,7 @@
         <Name dnOrder="0">system_interrupt.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default</Path>
         <Checksum dnOrder="2">AFB335AF6DBCF489724E9812468AE10A</Checksum>
+        <ProjectFileChecksum dnOrder="3">8610FA9DDC935949D070AF7CFBA10B25</ProjectFileChecksum>
       </Template>
       <Template dnOrder="19">
         <Name dnOrder="0">drv_oc_mapping.c</Name>
