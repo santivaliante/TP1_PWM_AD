@@ -167,7 +167,7 @@ void APP_Tasks ( void )
         {
             bool appInitialized = true;
             
-            LCD_Initialize();
+            APP_LCDInitialize();
             // Init ADC
             BSP_InitADC10();
             // Start Timers
