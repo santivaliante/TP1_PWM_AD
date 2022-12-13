@@ -58,6 +58,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdlib.h>
 #include "system_config.h"
 #include "system_definitions.h"
+#include "Mc32DriverAdc.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -84,10 +85,15 @@ extern "C" {
     determine the behavior of the application at various times.
 */
 
+#define OFF 0
+#define ON 1    
+    
+    
 typedef enum
 {
 	/* Application's state machine's initial state. */
 	APP_STATE_INIT=0,
+    APP_STATE_WAIT,
 	APP_STATE_SERVICE_TASKS,
 
 	/* TODO: Define states used by the application state machine. */
@@ -112,7 +118,7 @@ typedef struct
 {
     /* The application's current state */
     APP_STATES state;
-
+    S_ADCResults AdcRes;
     /* TODO: Define any additional data used by the application. */
 
 } APP_DATA;
@@ -164,7 +170,7 @@ typedef struct
 */
 
 void APP_Initialize ( void );
-
+void APP_LEDsState(bool);
 
 /*******************************************************************************
   Function:

@@ -75,9 +75,16 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     
     Application strings and buffers are be defined outside this structure.
 */
-
 APP_DATA appData;
-
+S_ADCResults AdcRes;
+BSP_LED arrLEDs[8] = {  PORTS_BIT_POS_0,
+                        PORTS_BIT_POS_1,
+                        PORTS_BIT_POS_4,
+                        PORTS_BIT_POS_5,
+                        PORTS_BIT_POS_6,
+                        PORTS_BIT_POS_7,
+                        PORTS_BIT_POS_15,
+                        PORTS_BIT_POS_10};
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -123,6 +130,23 @@ void APP_Initialize ( void )
      */
 }
 
+void APP_LEDsState(bool state){
+    
+    int i;
+    if(state){ // Turn ON the 8 LEDs
+        for (i = 0; i < 8; i++) {
+            
+            BSP_LEDOn(arrLEDs[i]);
+        }
+    }
+    else{ // Turn OFF the 8 LEDs
+        for (i = 0; i < 8; i++) {
+            
+            BSP_LEDOff(arrLEDs[i]);
+        }
+    }
+}
+
 
 /******************************************************************************
   Function:
@@ -142,8 +166,29 @@ void APP_Tasks ( void )
         case APP_STATE_INIT:
         {
             bool appInitialized = true;
-       
-        
+            
+            // Init LCD
+            lcd_init();
+            lcd_bl_on();
+            lcd_gotoxy(1, 1);
+            printf_lcd("TP1 PWM 2022-2023");
+            lcd_gotoxy(1, 2);
+            printf_lcd("Santiago Meven");
+            // Init ADC
+            BSP_InitADC10();
+            // Start Timers
+            DRV_TMR0_Start();
+            DRV_TMR1_Start();
+            DRV_TMR2_Start();
+            DRV_TMR3_Start();
+            // Start Output Compare
+            DRV_OC0_Start();
+            DRV_OC1_Start();
+            
+            // Turn ON all LEDs
+            APP_LEDsState(OFF);
+            // Update state machine
+            appData.state = APP_STATE_WAIT;
             if (appInitialized)
             {
             

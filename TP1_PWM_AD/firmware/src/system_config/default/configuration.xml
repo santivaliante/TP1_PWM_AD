@@ -170,7 +170,7 @@
       <Template dnOrder="0">
         <Name dnOrder="0">drv_oc_static.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default/framework/driver/oc/src</Path>
-        <Checksum dnOrder="2">63EC2B767D24AEB2A6EA9597429860C8</Checksum>
+        <Checksum dnOrder="2">3DC567476A6F62C99B77D07F704B2449</Checksum>
       </Template>
       <Template dnOrder="1">
         <Name dnOrder="0">sys_ports_static.c</Name>
@@ -258,6 +258,7 @@
         <Name dnOrder="0">system_interrupt.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default</Path>
         <Checksum dnOrder="2">AFB335AF6DBCF489724E9812468AE10A</Checksum>
+        <ProjectFileChecksum dnOrder="3">8610FA9DDC935949D070AF7CFBA10B25</ProjectFileChecksum>
       </Template>
       <Template dnOrder="19">
         <Name dnOrder="0">drv_oc_mapping.c</Name>

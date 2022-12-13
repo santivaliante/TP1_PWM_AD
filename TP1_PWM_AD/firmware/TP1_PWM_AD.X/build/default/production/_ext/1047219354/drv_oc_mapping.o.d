@@ -145,7 +145,11 @@ build/default/production/_ext/1047219354/drv_oc_mapping.o: \
  ../../../../../../../framework/driver/tmr/drv_tmr_compatibility.h \
  ../../../../../../../framework/system/ports/sys_ports.h \
  ../../../../../../../framework/system/ports/sys_ports_definitions.h \
+<<<<<<< HEAD
  ../src/app.h
+=======
+ ../src/app.h ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h
+>>>>>>> ede4455371e46128a15812e0f2bcecb8dc9280f1
 
 ../src/system_config/default/system_config.h:
 
@@ -438,3 +442,8 @@ build/default/production/_ext/1047219354/drv_oc_mapping.o: \
 ../../../../../../../framework/system/ports/sys_ports_definitions.h:
 
 ../src/app.h:
+<<<<<<< HEAD
+=======
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h:
+>>>>>>> ede4455371e46128a15812e0f2bcecb8dc9280f1
