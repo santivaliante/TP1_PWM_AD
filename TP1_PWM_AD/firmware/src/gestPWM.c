@@ -19,12 +19,21 @@ S_pwmSettings PWMData;      // pour les settings
 
 void GPWM_Initialize(S_pwmSettings *pData)
 {
-   // Init les data 
-    
-   // Init état du pont en H
-    
-   // lance les timers et OC
-    
+    // Start Timers
+    DRV_TMR0_Start();
+    DRV_TMR1_Start();
+    DRV_TMR2_Start();
+    DRV_TMR3_Start();
+    // Start Output Compare
+    DRV_OC0_Start();
+    DRV_OC1_Start();
+    // Init les data 
+    PWMData.AngleSetting = 20;
+    PWMData.SpeedSetting = 20;
+    PWMData.absAngle = 20;
+    PWMData.absSpeed = 20;
+    // Init état du pont en H
+    BSP_EnableHbrige();
 }
 
 // Obtention vitesse et angle (mise a jour des 4 champs de la structure)
