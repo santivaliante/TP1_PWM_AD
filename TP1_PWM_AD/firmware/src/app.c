@@ -167,13 +167,7 @@ void APP_Tasks ( void )
         {
             bool appInitialized = true;
             
-            // Init LCD
-            lcd_init();
-            lcd_bl_on();
-            lcd_gotoxy(1, 1);
-            printf_lcd("TP1 PWM 2022-2023");
-            lcd_gotoxy(1, 2);
-            printf_lcd("Santiago Meven");
+            LCD_Initialize();
             // Init ADC
             BSP_InitADC10();
             // Start Timers
@@ -199,7 +193,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-        
+            
             break;
         }
 
@@ -215,6 +209,17 @@ void APP_Tasks ( void )
     }
 }
 
+void APP_LCDInitialize(){
+    
+            lcd_init();
+            lcd_bl_on();
+            lcd_gotoxy(1, 1);
+            printf_lcd("TP1 PWM 2022-2023");
+            lcd_gotoxy(1, 2);
+            printf_lcd("Santiago Meven");
+            lcd_gotoxy(1, 3);
+            printf_lcd(" ");
+}
  
 
 /*******************************************************************************

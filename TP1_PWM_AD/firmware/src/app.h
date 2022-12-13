@@ -171,6 +171,7 @@ typedef struct
 
 void APP_Initialize ( void );
 void APP_LEDsState(bool);
+void APP_LCDInitialize(void);
 
 /*******************************************************************************
   Function:
