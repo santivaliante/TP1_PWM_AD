@@ -168,12 +168,16 @@ void APP_Tasks ( void )
         {
             // Set the flag
             bool appInitialized = true;
+<<<<<<< HEAD
             // Init struct values
             PWMData.AngleSetting = 0;
             PWMData.SpeedSetting = 0;
             PWMData.absAngle = 89;
             PWMData.absSpeed = 49;
             // Init LCD for the TP
+=======
+            
+>>>>>>> 6e08bbfb0856bc323cf27330cc2adf29a99891fb
             APP_LCDInitialize();
             // Init ADC
             BSP_InitADC10();

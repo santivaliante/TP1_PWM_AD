@@ -1,4 +1,5 @@
 build/default/production/_ext/1360937237/gestPWM.o: ../src/gestPWM.c \
+<<<<<<< HEAD
  ../src/GestPWM.h ../../../../../../../bsp/pic32mx_skes/bsp.h \
  ../../../../../../../framework/peripheral/ports/plib_ports.h \
  ../../../../../../../framework/peripheral/ports/processor/ports_processor.h \
@@ -157,3 +158,13 @@ build/default/production/_ext/1360937237/gestPWM.o: ../src/gestPWM.c \
 ../../../../../../../framework/peripheral/tmr/processor/../templates/tmr_CounterAsyncWriteInProgress_Default.h:
 
 ../../../../../../../framework/peripheral/tmr/processor/../templates/tmr_TimerOperationMode_Default.h:
+=======
+ ../src/GestPWM.h ../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h \
+ ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h
+
+../src/GestPWM.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h:
+>>>>>>> 6e08bbfb0856bc323cf27330cc2adf29a99891fb
