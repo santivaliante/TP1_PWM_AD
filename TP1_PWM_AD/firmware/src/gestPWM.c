@@ -14,6 +14,7 @@
 
 
 #include "GestPWM.h"
+#include "bsp.h"
 
 S_pwmSettings PWMData;      // pour les settings
 
@@ -55,6 +56,24 @@ void GPWM_DispSettings(S_pwmSettings *pData)
 // Execution PWM et gestion moteur à partir des info dans structure
 void GPWM_ExecPWM(S_pwmSettings *pData)
 {
+    if(pData->SpeedSetting > 0){
+        
+        // Change the sens of rotation
+        AIN1_HBRIDGE_W = 1;  //AIN1 High
+        AIN2_HBRIDGE_W = 0;  //AIN2 Low
+    }
+    else if(pData->SpeedSetting == 0){
+        
+        // Stop the motor
+        AIN1_HBRIDGE_W = 1;  //AIN1 High
+        AIN2_HBRIDGE_W = 0;  //AIN2 Low
+    }
+    else if(pData->SpeedSetting < 0){
+        
+        // Stop the motor
+        AIN1_HBRIDGE_W = 0;  //AIN1 High
+        AIN2_HBRIDGE_W = 1;  //AIN2 Low
+    }
     
 }
 
