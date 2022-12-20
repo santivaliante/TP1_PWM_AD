@@ -21,6 +21,13 @@
 // Définition des fonctions prototypes
 /*--------------------------------------------------------*/
 
+#define VAL_MAX_ADC 1023
+#define VAL_MOYENNE 10
+
+#define VAL_MAX_VITESSE 99
+#define VAL_MAX_VITESSEABS 198
+#define VAL_MAX_ANGLE 90
+#define VAL_MAX_ANGLEABS 180
 
 typedef struct {
     uint8_t absSpeed;    // vitesse 0 à 99
