@@ -55,6 +55,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "app.h"
 #include "gestPWM.h"
+#include "Mc32Delays.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -77,7 +78,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 APP_DATA appData;
-S_ADCResults AdcRes;
+S_ADCResults AdcRes; // ??? a enlever
 BSP_LED arrLEDs[8] = {  PORTS_BIT_POS_0,
                         PORTS_BIT_POS_1,
                         PORTS_BIT_POS_4,
@@ -168,16 +169,13 @@ void APP_Tasks ( void )
         {
             // Set the flag
             bool appInitialized = true;
-<<<<<<< HEAD
             // Init struct values
             PWMData.AngleSetting = 0;
             PWMData.SpeedSetting = 0;
             PWMData.absAngle = 89;
             PWMData.absSpeed = 49;
             // Init LCD for the TP
-=======
             
->>>>>>> 6e08bbfb0856bc323cf27330cc2adf29a99891fb
             APP_LCDInitialize();
             // Init ADC
             BSP_InitADC10();
@@ -199,7 +197,9 @@ void APP_Tasks ( void )
         //====================================================================// APP_STATE_SERVICE_TASKS
         case APP_STATE_SERVICE_TASKS:
         {
-            
+            GPWM_GetSettings(&PWMData);
+            GPWM_DispSettings(&PWMData);
+            delay_ms(10);
             break;
         }
 

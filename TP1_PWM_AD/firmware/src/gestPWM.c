@@ -11,26 +11,19 @@
 //
 /*--------------------------------------------------------*/
 
-
-
 #include "GestPWM.h"
-<<<<<<< HEAD
-#include "bsp.h"
-=======
 #include "Mc32DriverLcd.h"
 #include "Mc32DriverAdc.h"
 #include "bsp.h"
+#include "peripheral/oc/plib_oc.h"
 
 S_pwmSettings PWMData;            //Pour les settings
 S_ADCResults AdcResult;           //Pour la lecture des ADC
 static uint16_t tabMoyenne0 [10]; //Tableau pour moyenne glissante canal 0
 static uint16_t tabMoyenne1 [10]; //Tableau pour moyenne glissante canal 1
->>>>>>> 6e08bbfb0856bc323cf27330cc2adf29a99891fb
-
 
 void GPWM_Initialize(S_pwmSettings *pData)
 {
-<<<<<<< HEAD
     // Start Timers
     DRV_TMR0_Start();
     DRV_TMR1_Start();
@@ -46,20 +39,16 @@ void GPWM_Initialize(S_pwmSettings *pData)
     PWMData.absSpeed = 20;
     // Init état du pont en H
     BSP_EnableHbrige();
-=======
-   // Init les data 
-   int i;
-   for (i=0 ; i<= 9 ; i++)  //Mettre à 0 les 10 cases
-   {
-       tabMoyenne0 [i] = 0;
-       tabMoyenne1 [i] = 0;
-   }
-      
+    // Init les data 
+    int i;
+    for (i=0 ; i<= 9 ; i++)  //Mettre à 0 les 10 cases
+    {
+        tabMoyenne0 [i] = 0;
+        tabMoyenne1 [i] = 0;
+    }
    // Init état du pont en H
     
    // lance les timers et OC
-    
->>>>>>> 6e08bbfb0856bc323cf27330cc2adf29a99891fb
 }
 
 // Obtention vitesse et angle (mise a jour des 4 champs de la structure)
@@ -77,7 +66,7 @@ void GPWM_GetSettings(S_pwmSettings *pData)
     //Injection val ADC dans le tableaux en fonction du compteur
     tabMoyenne0[count] = AdcResult.Chan0;
     tabMoyenne1[count] = AdcResult.Chan1;
-    count ++;                       //Incrémentation du compteur
+    count++;                       //Incrémentation du compteur
     
     //Test de la valeur max du compteur
     if (count > VAL_MOYENNE - 1)
@@ -95,6 +84,7 @@ void GPWM_GetSettings(S_pwmSettings *pData)
     moyenne1 = moyenne1 / VAL_MOYENNE;
     
     // Conversion 
+    //pData->absSpeed = (moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE;
     pData->absSpeed = (moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE;
     pData->SpeedSetting = (int8_t)(moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE;
     pData->absAngle = (moyenne1 * VAL_MAX_ANGLEABS) / VAL_MAX_ADC ;
@@ -111,35 +101,15 @@ void GPWM_DispSettings(S_pwmSettings *pData)
     lcd_gotoxy(1,2);
     printf_lcd("SpeedSetting = %3d",pData->SpeedSetting);
     lcd_gotoxy(1,3);
-    printf_lcd("absSpeed = %3d",abs(pData->absSpeed));
+    printf_lcd("absSpeed     =  %2d",abs(pData->absSpeed));
     lcd_gotoxy(1,4);
-    printf_lcd("Angle = %3d",pData->AngleSetting);
+    printf_lcd("Angle        = %3d",pData->AngleSetting);
 }
 
 // Execution PWM et gestion moteur à partir des info dans structure
 void GPWM_ExecPWM(S_pwmSettings *pData)
 {
-<<<<<<< HEAD
-    if(pData->SpeedSetting > 0){
-        
-        // Change the sens of rotation
-        AIN1_HBRIDGE_W = 1;  //AIN1 High
-        AIN2_HBRIDGE_W = 0;  //AIN2 Low
-    }
-    else if(pData->SpeedSetting == 0){
-        
-        // Stop the motor
-        AIN1_HBRIDGE_W = 1;  //AIN1 High
-        AIN2_HBRIDGE_W = 0;  //AIN2 Low
-    }
-    else if(pData->SpeedSetting < 0){
-        
-        // Stop the motor
-        AIN1_HBRIDGE_W = 0;  //AIN1 High
-        AIN2_HBRIDGE_W = 1;  //AIN2 Low
-    }
-=======
-    //Variables pour OC
+    //Variables for OC
     uint16_t nbrPulseOC2 = 0;
     uint16_t nbrPulseOC3  = 0;
     
@@ -163,15 +133,14 @@ void GPWM_ExecPWM(S_pwmSettings *pData)
         AIN2_HBRIDGE_W = 0;
     }
     
-    //
->>>>>>> 6e08bbfb0856bc323cf27330cc2adf29a99891fb
-    
+    PLIB_OC_PulseWidth16BitSet(OC_ID_2, 999);
+    //PLIB_OC_PulseWidth16BitSet(OC_ID_3, 999);
 }
 
 // Execution PWM software
 void GPWM_ExecPWMSoft(S_pwmSettings *pData)
 {
-    
+    // ??????????
 }
 
 

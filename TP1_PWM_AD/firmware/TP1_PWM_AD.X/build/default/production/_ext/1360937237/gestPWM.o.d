@@ -1,6 +1,7 @@
 build/default/production/_ext/1360937237/gestPWM.o: ../src/gestPWM.c \
-<<<<<<< HEAD
- ../src/GestPWM.h ../../../../../../../bsp/pic32mx_skes/bsp.h \
+ ../src/GestPWM.h ../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h \
+ ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h \
+ ../../../../../../../bsp/pic32mx_skes/bsp.h \
  ../../../../../../../framework/peripheral/ports/plib_ports.h \
  ../../../../../../../framework/peripheral/ports/processor/ports_processor.h \
  ../../../../../../../framework/peripheral/ports/processor/ports_p32xxxx.h \
@@ -51,9 +52,29 @@ build/default/production/_ext/1360937237/gestPWM.o: ../src/gestPWM.c \
  ../../../../../../../framework/peripheral/tmr/processor/../templates/tmr_Period32Bit_In16BitRegister_pic32.h \
  ../../../../../../../framework/peripheral/tmr/processor/../templates/tmr_CounterAsyncWriteControl_Default.h \
  ../../../../../../../framework/peripheral/tmr/processor/../templates/tmr_CounterAsyncWriteInProgress_Default.h \
- ../../../../../../../framework/peripheral/tmr/processor/../templates/tmr_TimerOperationMode_Default.h
+ ../../../../../../../framework/peripheral/tmr/processor/../templates/tmr_TimerOperationMode_Default.h \
+ ../../../../../../../framework/peripheral/oc/plib_oc.h \
+ ../../../../../../../framework/peripheral/oc/processor/oc_processor.h \
+ ../../../../../../../framework/peripheral/oc/processor/oc_p32xxxx.h \
+ ../../../../../../../framework/peripheral/oc/processor/oc_p32mx795f512l.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_EnableControl_Default.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_Registers.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_StopInIdle_Default.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_FaultInput_Default.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_FaultStatus_Default.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_TimerSelect_Default.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_AlternateClock_Unsupported.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_AlternateTimerSelect_Unsupported.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_BufferValue_32Bit_Variant.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_PulseWidth_32Bit_Variant.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_BufferSize_Default.h \
+ ../../../../../../../framework/peripheral/oc/processor/../templates/oc_CompareModeSelect_Default.h
 
 ../src/GestPWM.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h:
 
 ../../../../../../../bsp/pic32mx_skes/bsp.h:
 
@@ -158,13 +179,35 @@ build/default/production/_ext/1360937237/gestPWM.o: ../src/gestPWM.c \
 ../../../../../../../framework/peripheral/tmr/processor/../templates/tmr_CounterAsyncWriteInProgress_Default.h:
 
 ../../../../../../../framework/peripheral/tmr/processor/../templates/tmr_TimerOperationMode_Default.h:
-=======
- ../src/GestPWM.h ../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h \
- ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h
 
-../src/GestPWM.h:
+../../../../../../../framework/peripheral/oc/plib_oc.h:
 
-../../../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:
+../../../../../../../framework/peripheral/oc/processor/oc_processor.h:
 
-../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h:
->>>>>>> 6e08bbfb0856bc323cf27330cc2adf29a99891fb
+../../../../../../../framework/peripheral/oc/processor/oc_p32xxxx.h:
+
+../../../../../../../framework/peripheral/oc/processor/oc_p32mx795f512l.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_EnableControl_Default.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_Registers.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_StopInIdle_Default.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_FaultInput_Default.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_FaultStatus_Default.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_TimerSelect_Default.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_AlternateClock_Unsupported.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_AlternateTimerSelect_Unsupported.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_BufferValue_32Bit_Variant.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_PulseWidth_32Bit_Variant.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_BufferSize_Default.h:
+
+../../../../../../../framework/peripheral/oc/processor/../templates/oc_CompareModeSelect_Default.h:
