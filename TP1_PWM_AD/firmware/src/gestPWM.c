@@ -74,7 +74,7 @@ void GPWM_GetSettings(S_pwmSettings *pData)
         count = 0; //Remise à 0 du compteur
     }
     
-    //Calculer la moyenne
+    // Calcule la moyenne glissante
     for(i = 0 ; i < VAL_MOYENNE; i++)
     {
         moyenne0 += tabMoyenne0[i];
@@ -83,10 +83,9 @@ void GPWM_GetSettings(S_pwmSettings *pData)
     moyenne0 = moyenne0 / VAL_MOYENNE;
     moyenne1 = moyenne1 / VAL_MOYENNE;
     
-    // Conversion 
-    //pData->absSpeed = (moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE;
-    pData->absSpeed = (moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE;
-    pData->SpeedSetting = (int8_t)(moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE;
+    // Conversions
+    pData->absSpeed = abs((moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE);
+    pData->SpeedSetting = (signed)(moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE;
     pData->absAngle = (moyenne1 * VAL_MAX_ANGLEABS) / VAL_MAX_ADC ;
     pData->AngleSetting = (int8_t) pData->absAngle - VAL_MAX_ANGLE;
 }
@@ -132,15 +131,27 @@ void GPWM_ExecPWM(S_pwmSettings *pData)
         AIN1_HBRIDGE_W = 1;
         AIN2_HBRIDGE_W = 0;
     }
-    
-    PLIB_OC_PulseWidth16BitSet(OC_ID_2, 999);
-    //PLIB_OC_PulseWidth16BitSet(OC_ID_3, 999);
+    PLIB_OC_PulseWidth16BitSet(OC_ID_2, (MULT_FACT_MOTOR * pData->absSpeed));
+    PLIB_OC_PulseWidth16BitSet(OC_ID_3, (OFFSET_600US_SERVO + MULT_FACT_SERVO * pData->absAngle));
 }
 
 // Execution PWM software
-void GPWM_ExecPWMSoft(S_pwmSettings *pData)
-{
-    // ??????????
+void GPWM_ExecPWMSoft(S_pwmSettings *pData){
+    
+    static uint8_t counter = 0;
+    
+    if(counter >= pData->absSpeed){
+        
+        BSP_LEDStateSet(BSP_LED_2, 0);
+    }
+    
+    if(counter >= 100){
+        if((pData->absSpeed) > 0) BSP_LEDStateSet(BSP_LED_2, 1);
+        counter = 0;
+    }
+
+    
+    counter++;
 }
 
 

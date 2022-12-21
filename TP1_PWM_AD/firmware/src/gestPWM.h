@@ -29,6 +29,10 @@
 #define VAL_MAX_ANGLE 90
 #define VAL_MAX_ANGLEABS 180
 
+#define OFFSET_600US_SERVO 3000 // (35000 / 7) * 0.6 = 3000 // 3000 correspond à 600us (temps min impultion)
+#define MULT_FACT_SERVO 50 // (((35000 / 7) * 2.4) - 3000) = 50  
+#define MULT_FACT_MOTOR 20 // 2000 / 100 = 20
+
 typedef struct {
     uint8_t absSpeed;    // vitesse 0 à 99
     uint8_t absAngle;    // Angle  0 à 180

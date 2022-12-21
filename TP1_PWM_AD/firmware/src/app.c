@@ -78,7 +78,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 APP_DATA appData;
-S_ADCResults AdcRes; // ??? a enlever
 BSP_LED arrLEDs[8] = {  PORTS_BIT_POS_0,
                         PORTS_BIT_POS_1,
                         PORTS_BIT_POS_4,
@@ -198,7 +197,9 @@ void APP_Tasks ( void )
         case APP_STATE_SERVICE_TASKS:
         {
             GPWM_GetSettings(&PWMData);
+            GPWM_ExecPWM(&PWMData);
             GPWM_DispSettings(&PWMData);
+            
             delay_ms(10);
             break;
         }
