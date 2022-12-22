@@ -144,7 +144,8 @@ build/default/production/_ext/1360937237/app.o: ../src/app.c ../src/app.h \
  ../../../../../../../framework/driver/tmr/drv_tmr_compatibility.h \
  ../../../../../../../framework/system/ports/sys_ports.h \
  ../../../../../../../framework/system/ports/sys_ports_definitions.h \
- ../src/app.h ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h
+ ../src/app.h ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h \
+ ../src/gestPWM.h ../../../../../../../bsp/pic32mx_skes/Mc32Delays.h
 
 ../src/app.h:
 
@@ -441,3 +442,7 @@ build/default/production/_ext/1360937237/app.o: ../src/app.c ../src/app.h \
 ../src/app.h:
 
 ../../../../../../../bsp/pic32mx_skes/Mc32DriverAdc.h:
+
+../src/gestPWM.h:
+
+../../../../../../../bsp/pic32mx_skes/Mc32Delays.h:

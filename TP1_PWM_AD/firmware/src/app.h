@@ -169,7 +169,7 @@ typedef struct
     This routine must be called from the SYS_Initialize function.
 */
 
-void APP_Initialize ( void );
+void APP_Initialize (void);
 void APP_LEDsState(bool);
 void APP_LCDInitialize(void);
 

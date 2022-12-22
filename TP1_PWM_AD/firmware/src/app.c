@@ -54,6 +54,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
+#include "gestPWM.h"
+#include "Mc32Delays.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -76,7 +78,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 APP_DATA appData;
-S_ADCResults AdcRes;
 BSP_LED arrLEDs[8] = {  PORTS_BIT_POS_0,
                         PORTS_BIT_POS_1,
                         PORTS_BIT_POS_4,
@@ -162,38 +163,44 @@ void APP_Tasks ( void )
     /* Check the application's current state. */
     switch ( appData.state )
     {
-        /* Application's initial state. */
+        //====================================================================// APP_STATE_INIT
         case APP_STATE_INIT:
         {
+            // Set the flag
             bool appInitialized = true;
+            // Init struct values
+            PWMData.AngleSetting = 0;
+            PWMData.SpeedSetting = 0;
+            PWMData.absAngle = 89;
+            PWMData.absSpeed = 49;
+            // Init LCD for the TP
             
             APP_LCDInitialize();
             // Init ADC
             BSP_InitADC10();
-            // Start Timers
-            DRV_TMR0_Start();
-            DRV_TMR1_Start();
-            DRV_TMR2_Start();
-            DRV_TMR3_Start();
-            // Start Output Compare
-            DRV_OC0_Start();
-            DRV_OC1_Start();
-            
+            // Start all Timers and OCs
+            GPWM_Initialize(&PWMData);
             // Turn ON all LEDs
             APP_LEDsState(OFF);
             // Update state machine
             appData.state = APP_STATE_WAIT;
-            if (appInitialized)
-            {
-            
-                appData.state = APP_STATE_SERVICE_TASKS;
-            }
+            if (appInitialized) appData.state = APP_STATE_SERVICE_TASKS;
             break;
         }
-
+        //====================================================================// APP_STATE_WAIT
+        case APP_STATE_WAIT:
+        {
+            // Do nothing, the sun is shining
+            break;
+        }
+        //====================================================================// APP_STATE_SERVICE_TASKS
         case APP_STATE_SERVICE_TASKS:
         {
+            GPWM_GetSettings(&PWMData);
+            GPWM_ExecPWM(&PWMData);
+            GPWM_DispSettings(&PWMData);
             
+            delay_ms(10);
             break;
         }
 
@@ -211,16 +218,16 @@ void APP_Tasks ( void )
 
 void APP_LCDInitialize(){
     
-            lcd_init();
-            lcd_bl_on();
-            lcd_gotoxy(1, 1);
-            printf_lcd("TP1 PWM 2022-2023");
-            lcd_gotoxy(1, 2);
-            printf_lcd("Santiago Meven");
-            lcd_gotoxy(1, 3);
-            printf_lcd(" ");
+    lcd_init();
+    lcd_bl_on();
+    lcd_gotoxy(1, 1);
+    printf_lcd("TP1 PWM 2022-2023");
+    lcd_gotoxy(1, 2);
+    printf_lcd("Santiago Meven");
+    lcd_gotoxy(1, 3);
+    printf_lcd(" ");
 }
- 
+
 
 /*******************************************************************************
  End of File
