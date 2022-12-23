@@ -145,11 +145,10 @@ void GPWM_ExecPWMSoft(S_pwmSettings *pData){
         BSP_LEDStateSet(BSP_LED_2, 0);
     }
     
-    if(counter >= 100){
+    if(counter > 99){
         if((pData->absSpeed) > 0) BSP_LEDStateSet(BSP_LED_2, 1);
         counter = 0;
     }
-
     
     counter++;
 }
