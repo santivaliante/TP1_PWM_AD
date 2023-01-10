@@ -170,6 +170,7 @@ typedef struct
 */
 
 void APP_Initialize (void);
+void APP_UpdateState(APP_STATES);
 void APP_LEDsState(bool);
 void APP_LCDInitialize(void);
 
