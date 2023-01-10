@@ -24,37 +24,34 @@ static uint16_t tabMoyenne1 [10]; //Tableau pour moyenne glissante canal 1
 
 void GPWM_Initialize(S_pwmSettings *pData)
 {
-    // Start Timers
+    // Start the 4 Timers
     DRV_TMR0_Start();
     DRV_TMR1_Start();
     DRV_TMR2_Start();
     DRV_TMR3_Start();
-    // Start Output Compare
+    // Start the 2 Output Compares
     DRV_OC0_Start();
     DRV_OC1_Start();
     // Init les data 
-    PWMData.AngleSetting = 20;
-    PWMData.SpeedSetting = 20;
-    PWMData.absAngle = 20;
-    PWMData.absSpeed = 20;
-    // Init état du pont en H
+    PWMData.AngleSetting = 0;
+    PWMData.SpeedSetting = 0;
+    PWMData.absAngle = 0;
+    PWMData.absSpeed = 0;
+    // Init l'état du pont en H
     BSP_EnableHbrige();
-    // Init les data 
+    // Init les data du tableau
     int i;
     for (i=0 ; i<= 9 ; i++)  //Mettre à 0 les 10 cases
     {
         tabMoyenne0 [i] = 0;
         tabMoyenne1 [i] = 0;
     }
-   // Init état du pont en H
-    
-   // lance les timers et OC
 }
 
 // Obtention vitesse et angle (mise a jour des 4 champs de la structure)
 void GPWM_GetSettings(S_pwmSettings *pData)	
 { 
-    //Lecture des ADC
+    //Lecture des ADCs
     AdcResult = BSP_ReadAllADC();       
       
     //Variables Moyenne glissante
@@ -74,7 +71,7 @@ void GPWM_GetSettings(S_pwmSettings *pData)
         count = 0; //Remise à 0 du compteur
     }
     
-    // Calcule la moyenne glissante
+    // Calcul la moyenne glissante
     for(i = 0 ; i < VAL_MOYENNE; i++)
     {
         moyenne0 += tabMoyenne0[i];
@@ -84,23 +81,30 @@ void GPWM_GetSettings(S_pwmSettings *pData)
     moyenne1 = moyenne1 / VAL_MOYENNE;
     
     // Conversions
+    //absSpeed = (moyenne * 198) / 1023 - 99 (calcul non-signé)
     pData->absSpeed = abs((moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE);
+    //SpeedSetting = (moyenne * 198) / 1023 - 99 (calcul signé)
     pData->SpeedSetting = (signed)(moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE;
+    //absAngle = (moyenne * 180) / 1023 
     pData->absAngle = (moyenne1 * VAL_MAX_ANGLEABS) / VAL_MAX_ADC ;
+    //AngleSetting = absAngle - 90
     pData->AngleSetting = (int8_t) pData->absAngle - VAL_MAX_ANGLE;
 }
-
 
 // Affichage des information en exploitant la structure
 void GPWM_DispSettings(S_pwmSettings *pData)
 {
+    // Clear the line 2, 3 and 4
     lcd_ClearLine(2);
     lcd_ClearLine(3);
     lcd_ClearLine(4);
+    // Go to the line 2
     lcd_gotoxy(1,2);
     printf_lcd("SpeedSetting = %3d",pData->SpeedSetting);
+    // Go to the line 3
     lcd_gotoxy(1,3);
     printf_lcd("absSpeed     =  %2d",abs(pData->absSpeed));
+    // Go to the line 4
     lcd_gotoxy(1,4);
     printf_lcd("Angle        = %3d",pData->AngleSetting);
 }
@@ -108,11 +112,7 @@ void GPWM_DispSettings(S_pwmSettings *pData)
 // Execution PWM et gestion moteur à partir des info dans structure
 void GPWM_ExecPWM(S_pwmSettings *pData)
 {
-    //Variables for OC
-    uint16_t nbrPulseOC2 = 0;
-    uint16_t nbrPulseOC3  = 0;
-    
-    //Gestion du sens de rotation du moteur
+    //Gestion du sens de rotation du moteur en fonction de la datasheet du TB6612FNG
     if (pData->SpeedSetting == 0)
     {
         //Moteur ne tourne pas
@@ -131,6 +131,8 @@ void GPWM_ExecPWM(S_pwmSettings *pData)
         AIN1_HBRIDGE_W = 1;
         AIN2_HBRIDGE_W = 0;
     }
+    
+    // Calculations are explained next to the defines 
     PLIB_OC_PulseWidth16BitSet(OC_ID_2, (MULT_FACT_MOTOR * pData->absSpeed));
     PLIB_OC_PulseWidth16BitSet(OC_ID_3, (OFFSET_600US_SERVO + MULT_FACT_SERVO * pData->absAngle));
 }
@@ -140,16 +142,19 @@ void GPWM_ExecPWMSoft(S_pwmSettings *pData){
     
     static uint8_t counter = 0;
     
+    // Define the duty cycle (T_on) of the PWM signal depending on the value of the absolute speed
     if(counter >= pData->absSpeed){
         
         BSP_LEDStateSet(BSP_LED_2, 0);
     }
     
+    // Define the period of the PWM
     if(counter > 99){
         if((pData->absSpeed) > 0) BSP_LEDStateSet(BSP_LED_2, 1);
         counter = 0;
     }
     
+    // Incrementation counter, 1 = 35us
     counter++;
 }
 

@@ -122,13 +122,13 @@ BSP_LED arrLEDs[8] = {  PORTS_BIT_POS_0,
 
 void APP_Initialize ( void )
 {
-    /* Place the App state machine in its initial state. */
+    // Place the App state machine in its initial state.
     appData.state = APP_STATE_INIT;
+}
 
+void APP_UpdateState(APP_STATES NewState){
     
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
+    appData.state = NewState;
 }
 
 void APP_LEDsState(bool state){
@@ -148,7 +148,6 @@ void APP_LEDsState(bool state){
     }
 }
 
-
 /******************************************************************************
   Function:
     void APP_Tasks ( void )
@@ -159,7 +158,6 @@ void APP_LEDsState(bool state){
 
 void APP_Tasks ( void )
 {
-
     /* Check the application's current state. */
     switch ( appData.state )
     {
@@ -168,13 +166,7 @@ void APP_Tasks ( void )
         {
             // Set the flag
             bool appInitialized = true;
-            // Init struct values
-            PWMData.AngleSetting = 0;
-            PWMData.SpeedSetting = 0;
-            PWMData.absAngle = 89;
-            PWMData.absSpeed = 49;
-            // Init LCD for the TP
-            
+            // Init LCD for the TP1
             APP_LCDInitialize();
             // Init ADC
             BSP_InitADC10();
@@ -190,22 +182,22 @@ void APP_Tasks ( void )
         //====================================================================// APP_STATE_WAIT
         case APP_STATE_WAIT:
         {
-            // Do nothing, the sun is shining
+            /*"Do nothing" typically means to take no action, to not engage in 
+             * any activity, or to refrain from making any decision. It can also 
+             * mean to avoid taking responsibility or making an effort. For 
+             * example, one might say "I'm just going to do nothing today" to 
+             * express their intention to relax and not engage in any productive 
+             * or structured activities.*/
             break;
         }
         //====================================================================// APP_STATE_SERVICE_TASKS
         case APP_STATE_SERVICE_TASKS:
         {
-            GPWM_GetSettings(&PWMData);
-            GPWM_ExecPWM(&PWMData);
-            GPWM_DispSettings(&PWMData);
-            
-            delay_ms(10);
+            // Update state machine
+            APP_UpdateState(APP_STATE_WAIT);
             break;
         }
-
         /* TODO: implement your application state machine.*/
-        
 
         /* The default state should never be executed. */
         default:
@@ -220,14 +212,16 @@ void APP_LCDInitialize(){
     
     lcd_init();
     lcd_bl_on();
+    // Go to the first line
     lcd_gotoxy(1, 1);
     printf_lcd("TP1 PWM 2022-2023");
+    // Go to the second line
     lcd_gotoxy(1, 2);
     printf_lcd("Santiago Meven");
+    // Go to the third line
     lcd_gotoxy(1, 3);
     printf_lcd(" ");
 }
-
 
 /*******************************************************************************
  End of File
