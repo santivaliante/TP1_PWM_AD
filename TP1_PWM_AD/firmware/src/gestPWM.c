@@ -37,11 +37,11 @@ void GPWM_Initialize(S_pwmSettings *pData)
     PWMData.SpeedSetting = 0;
     PWMData.absAngle = 0;
     PWMData.absSpeed = 0;
-    // Init l'état du pont en H
+    // Init l'Ã©tat du pont en H
     BSP_EnableHbrige();
     // Init les data du tableau
     int i;
-    for (i=0 ; i<= 9 ; i++)  //Mettre à 0 les 10 cases
+    for (i=0 ; i<= 9 ; i++)  //Mettre Ã  0 les 10 cases
     {
         tabMoyenne0 [i] = 0;
         tabMoyenne1 [i] = 0;
@@ -63,12 +63,12 @@ void GPWM_GetSettings(S_pwmSettings *pData)
     //Injection val ADC dans le tableaux en fonction du compteur
     tabMoyenne0[count] = AdcResult.Chan0;
     tabMoyenne1[count] = AdcResult.Chan1;
-    count++;                       //Incrémentation du compteur
+    count++;                       //IncrÃ©mentation du compteur
     
     //Test de la valeur max du compteur
     if (count > VAL_MOYENNE - 1)
     {
-        count = 0; //Remise à 0 du compteur
+        count = 0; //Remise Ã  0 du compteur
     }
     
     // Calcul la moyenne glissante
@@ -81,9 +81,9 @@ void GPWM_GetSettings(S_pwmSettings *pData)
     moyenne1 = moyenne1 / VAL_MOYENNE;
     
     // Conversions
-    //absSpeed = (moyenne * 198) / 1023 - 99 (calcul non-signé)
+    //absSpeed = (moyenne * 198) / 1023 - 99 (calcul non-signÃ©)
     pData->absSpeed = abs((moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE);
-    //SpeedSetting = (moyenne * 198) / 1023 - 99 (calcul signé)
+    //SpeedSetting = (moyenne * 198) / 1023 - 99 (calcul signÃ©)
     pData->SpeedSetting = (signed)(moyenne0 * VAL_MAX_VITESSEABS) / VAL_MAX_ADC - VAL_MAX_VITESSE;
     //absAngle = (moyenne * 180) / 1023 
     pData->absAngle = (moyenne1 * VAL_MAX_ANGLEABS) / VAL_MAX_ADC ;
@@ -109,7 +109,7 @@ void GPWM_DispSettings(S_pwmSettings *pData)
     printf_lcd("Angle        = %3d",pData->AngleSetting);
 }
 
-// Execution PWM et gestion moteur à partir des info dans structure
+// Execution PWM et gestion moteur Ã  partir des info dans structure
 void GPWM_ExecPWM(S_pwmSettings *pData)
 {
     //Gestion du sens de rotation du moteur en fonction de la datasheet du TB6612FNG
@@ -132,9 +132,10 @@ void GPWM_ExecPWM(S_pwmSettings *pData)
         AIN2_HBRIDGE_W = 0;
     }
     
-    // Calculations are explained next to the defines 
+    // Update the period register of the 2 OCs
     PLIB_OC_PulseWidth16BitSet(OC_ID_2, (MULT_FACT_MOTOR * pData->absSpeed));
     PLIB_OC_PulseWidth16BitSet(OC_ID_3, (OFFSET_600US_SERVO + MULT_FACT_SERVO * pData->absAngle));
+    // Calculations are explained next to the defines 
 }
 
 // Execution PWM software
