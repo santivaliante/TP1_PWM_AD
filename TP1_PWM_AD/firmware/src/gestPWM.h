@@ -4,9 +4,9 @@
 // GestPWM.h
 /*--------------------------------------------------------*/
 //	Description :	Gestion des PWM 
-//			        pour TP1 2016-2017
+//			        TP1 2022-2023
 //
-//	Auteur 		: 	C. HUBER
+//	Auteur 		: 	C. HUBER / MRI / SVE
 //
 //	Version		:	V1.1
 //	Compilateur	:	XC32 V1.42 + Harmony 1.08
@@ -29,8 +29,13 @@
 #define VAL_MAX_ANGLE 90
 #define VAL_MAX_ANGLEABS 180
 
+<<<<<<< HEAD
 #define OFFSET_600US_SERVO 3000 // (35000 / 7) * 0.6 = 3000
 #define MULT_FACT_SERVO 50 // (((35000 / 7) * 2.4) - 3000) / 180 = 50  
+=======
+#define OFFSET_600US_SERVO 3000 // (35000 / 7) * 0.6 = 3000 // 3000 correspond à 600us (temps min impultion)
+#define MULT_FACT_SERVO 50 // (((35000 / 7) * 2.4) - 3000) = 50  
+>>>>>>> a793fd3a2df78ad329e23b3941f7ed8ebd6bb488
 #define MULT_FACT_MOTOR 20 // 2000 / 100 = 20
 
 typedef struct {
